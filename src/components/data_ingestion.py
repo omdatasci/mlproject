@@ -11,6 +11,12 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass # Used to define simple classes to store configurations.
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
+# from src.components.model_trainer import ModelTrainerConfig
+# from src.components.model_trainer import ModelTrainer
+
 # This class holds the configuration details for paths where the data files will be stored.
 @dataclass
 class DataIngestionConfig:     # Any required input will be pass through this class
@@ -62,7 +68,10 @@ class DataIngestion:
 #  Executes the initiate_data_ingestion method when the script is run directly.
 if __name__ == "__main__":
     obj=DataIngestion()     # Creates an instance of DataIngestion.
-    obj.initiate_data_ingestion() # Calls the initiate_data_ingestion method to start the data ingestion process.
+    train_data,test_data = obj.initiate_data_ingestion() # Calls the initiate_data_ingestion method to start the data ingestion process.
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data,test_data)
     
 
 
