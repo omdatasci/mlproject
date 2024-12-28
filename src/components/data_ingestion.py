@@ -14,8 +14,8 @@ from dataclasses import dataclass # Used to define simple classes to store confi
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
-# from src.components.model_trainer import ModelTrainerConfig
-# from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
 
 # This class holds the configuration details for paths where the data files will be stored.
 @dataclass
@@ -25,7 +25,7 @@ class DataIngestionConfig:     # Any required input will be pass through this cl
     # File path where the testing data will be saved
     test_data_path: str=os.path.join('artifacts','test.csv') # Testing data will be stored in artifacts folder and the file name is test.csv
     # File path where the raw data will be saved 
-    raw_data_path: str=os.path.join('artifacts','data.csv') # raw data will be stored in artifacts folder and the file name is train.csv
+    raw_data_path: str=os.path.join('artifacts','data.csv') # raw data will be stored in artifacts folder and the file name is data.csv
 
 class DataIngestion:
     # Initializes an instance of the DataIngestionConfig class and stores the configuration in self.ingestion_config.
@@ -71,8 +71,10 @@ if __name__ == "__main__":
     train_data,test_data = obj.initiate_data_ingestion() # Calls the initiate_data_ingestion method to start the data ingestion process.
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
     
+    modeltrainer = ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
 
 
 
